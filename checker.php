@@ -71,26 +71,25 @@ foreach ($urls as $url) {
                 if (strlen($str) > 1)
                     $info[] = $str;
             }
-        }
-        else {
+            var_dump($info);
+
+            $blocks[$i]['name'] = trim($info[2]);
+            if (strlen($blocks[$i]['name']) > 4)
+                $fill++;
+            else
+                echo "[-] Short name\n";
+
+            if ($fill < 2) {
+                echo "[-] Corrupted block: $i\n";
+                $corrupt_blocks++;
+            }
+
+
+            $global_blocks[] = $blocks[$i];
+            unset($info);
+        } else {
             echo "[-] Info not found\n";
         }
-        //var_dump($info);
-
-        $blocks[$i]['name'] = trim($info[2]);
-        if (strlen($blocks[$i]['name']) > 4)
-            $fill++;
-        else
-            echo "[-] Short name\n";
-
-        if ($fill < 2) {
-            echo "[-] Corrupted block: $i\n";
-            $corrupt_blocks++;
-        }
-
-
-        $global_blocks[] = $blocks[$i];
-        unset($info);
     }
 
     echo "[i] Corrupted blocks: $corrupt_blocks\n";
