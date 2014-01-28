@@ -18,9 +18,6 @@ if (!is_dir($tmp_dir))
 $db_file = $tmp_dir . DIRECTORY_SEPARATOR . 'onerun.gz';
 $global_db_file = $tmp_dir . DIRECTORY_SEPARATOR . 'global.gz';
 
-//Torrent trackers and search urls, replace keys with #key# pattern
-$sources['thepiratebay.sx']['url'] = 'https://thepiratebay.sx/search/#key#/0/99/601';
-
 //Marks for blocks
 $block_marks[] = '';
 $block_marks[] = '';

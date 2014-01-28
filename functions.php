@@ -14,6 +14,16 @@ mb_internal_encoding("UTF-8");
 $craps = array('\\', '.', '(', ')', ',', '[', ']', '/', ':', '\'');
 $extentions = array('pdf', 'epub', 'jpg', 'mp3', 'gif', 'chm', 'mobi', 'htm', 'txt', 'djvu', 'zip', 'htm');
 
+function html2txt($document){
+$search = array('@<script[^>]*?>.*?</script>@si',  // Strip out javascript
+               '@<[\/\!]*?[^<>]*?>@si',            // Strip out HTML tags
+               '@<style[^>]*?>.*?</style>@siU',    // Strip style tags properly
+               '@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments including CDATA
+);
+$text = preg_replace($search, '#', $document);
+return $text;
+} 
+
 function list2lines($list) {
     $lines = explode("\r\n", $list);
     if (sizeof($lines) == 1)
@@ -338,7 +348,7 @@ function get_blocks($str, $marks) {
     $html = str_get_html($str);
     $i = 0;
     $sum = 0;
-    foreach ($html->find('td') as $element) {
+    foreach ($html->find('li') as $element) {
         $div = $element->innertext;
         $m = sizeof($marks);
         $c = 0;
