@@ -1,4 +1,16 @@
 ranker
 ======
 
-listomania reseacrh
+listomania research bot
+
+Install
+=======
+
+Usage
+=====
+
+Data structures
+===============
+
+Design
+======
