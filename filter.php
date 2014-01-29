@@ -6,6 +6,7 @@
 $exec_time = microtime(true);
 require_once 'config.php';
 require_once 'functions.php';
+require_once 'namefunc.php';
 echo "\n[+] Started\n";
 
 //Read one_run
@@ -17,21 +18,18 @@ if ($one_run) {
 else
     exit('Problem with one_run file');
 
-//Read daily data
-$daily = read_db_from_file($daily_db_file);
-if ($daily) { //Daily db exists
-    $daily_size = sizeof($daily);
-    echo "[+] Read $daily_size daily blocks\n";
-    //Add to daily
-} else { //Daily db is empty
-    unset($daily);
-    //Form daily db
-    $daily_counter = 0;
+$html = '<table>';
+$html .= '<thead><tr><th>Имя</th><th>Год рождения</th></tr></thead><tbody>';
+
+foreach ($one_run as $data) {
+    $ru = name2ru($data['name']);
+    $year = $data['year'];
+    $html.='<tr><td>' . $ru . '</td><td>' . $year . '</td></tr>';
 }
 
-//Save daily data to json
-if (save_json($daily_db_file, $daily))
-    echo "[+] Saved\n";
+
+$html .= '</tbody></table>';
+echo "\n\n".$html."\n\n";
 
 $exec_time = round(microtime(true) - $exec_time, 2);
 echo "[i] Execution time: $exec_time sec.\n";

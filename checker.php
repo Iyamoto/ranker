@@ -63,23 +63,26 @@ foreach ($urls as $url) {
 
         //TODO form function
         $tmp = html2txt($html_blocks[$i]);
-        $tmp = preg_replace('|#+|', '#', $tmp);
+        //$tmp = preg_replace('|#+|', '#', $tmp);
         $r = preg_match_all('|#([^#]+)#|', $tmp, $m);
         if ($r) {
             foreach ($m[1] as $str) {
                 $str = trim($str);
-                if (strlen($str) > 1)
+                if (strlen($str) > 0)
                     $info[] = $str;
             }
             var_dump($info);
 
-            $blocks[$i]['name'] = trim($info[2]);
+            $blocks[$i]['name'] = trim($info[3]);
             if (strlen($blocks[$i]['name']) > 4)
                 $fill++;
             else
                 echo "[-] Short name\n";
-
-            if ($fill < 2) {
+            
+            $blocks[$i]['year'] = trim($info[4]);
+            $fill++;
+            
+            if ($fill < 3) {
                 echo "[-] Corrupted block: $i\n";
                 $corrupt_blocks++;
             }
